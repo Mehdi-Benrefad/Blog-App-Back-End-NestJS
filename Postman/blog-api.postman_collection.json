@@ -19,7 +19,7 @@
 			"id": "05c94e3d-152e-1886-9389-5d8c12f9b5db",
 			"headers": "",
 			"headerData": [],
-			"url": "http://localhost:3000/users/4",
+			"url": "http://localhost:3000/users/1",
 			"queryParams": [],
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -31,7 +31,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1627668282594,
+			"time": 1627686147286,
 			"name": "delete User",
 			"description": "",
 			"collectionId": "964805a4-09b3-82fa-ea01-380524314e39",
@@ -105,12 +105,12 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1627668278376,
+			"time": 1627686157159,
 			"name": "addUser",
 			"description": "",
 			"collectionId": "964805a4-09b3-82fa-ea01-380524314e39",
 			"responses": [],
-			"rawModeData": "{\n\t\"name\":\"Mehdi\",\n\t\"username\":\"mb5-bis2\"\n}"
+			"rawModeData": "{\n\t\"name\":\"Mehdi\",\n\t\"username\":\"mb5\",\n\t\"email\":\"benrefadmehdi@gmail.com\",\n\t\"password\":\"123456789\"\n}"
 		},
 		{
 			"id": "de7e0996-4293-6d4b-df3c-eab3b8f21d7f",
@@ -123,7 +123,7 @@
 					"enabled": true
 				}
 			],
-			"url": "http://localhost:3000/users/5",
+			"url": "http://localhost:3000/users/2",
 			"queryParams": [],
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -135,12 +135,12 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1627668271162,
+			"time": 1627686152335,
 			"name": "update user",
 			"description": "",
 			"collectionId": "964805a4-09b3-82fa-ea01-380524314e39",
 			"responses": [],
-			"rawModeData": "{\n\t\"name\":\"Mehdi\",\n\t\"username\":\"mb5-bis\"\n}"
+			"rawModeData": "{\n\t\"name\":\"Mehdi\",\n\t\"username\":\"mb5-bis\",\n\t\"email\":\"benrefadmehdi@gmail.com\",\n\t\"password\":\"123456789\"\n}"
 		}
 	]
 }
