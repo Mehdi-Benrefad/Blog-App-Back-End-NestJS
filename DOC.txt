@@ -117,4 +117,11 @@ Pagination:
 2- on ajoute cette importation a user.service.ts [import {paginate, Pagination, IPaginationOptions} from 'nestjs-typeorm-paginate';]
 3- On cree une fonction paginate() dans user.service.ts.
 4- on cree une fonction index() dans user.controller.ts
-5- 
+
+
+
+
+
+
+/!\
+Dans le fichier "main.ts" de l'API du backend on definit le prefix global de l'application.
