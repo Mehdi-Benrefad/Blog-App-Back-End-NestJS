@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { UserEntity } from './models/user.entity';
 import { User } from './models/user.interface';
 import { switchMap, map, catchError} from 'rxjs/operators';
+import {paginate, Pagination, IPaginationOptions} from 'nestjs-typeorm-paginate';
 
 @Injectable()
 export class UserService {
@@ -70,6 +71,20 @@ export class UserService {
             })
         );
         //return from(this.userRepository.find());
+    }
+
+    
+
+
+    //fonction qui returne une pagination d'utilisateurs.
+    paginate(options: IPaginationOptions): Observable<Pagination<User>> {
+        return from(paginate<User>(this.userRepository, options)).pipe(
+            map((usersPageable: Pagination<User>) => {
+                usersPageable.items.forEach(function (v) {delete v.password});
+
+                return usersPageable;
+            })
+        )
     }
 
 
