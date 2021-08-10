@@ -1,0 +1,120 @@
+-----------------------------------------------------------------------------------------------------------------------
+Setup nestjs API
+-----------------------------------------------------------------------------------------------------------------------
+1- Creation de l'api 
+    [nest new api]
+
+2- Configuration de l'api 
+    [npm i --save @nestjs/config]
+
+3- nestjs TypeOrm(DataBase) 
+    [npm install --save @nestjs/typeorm typeorm pg]
+
+4- Ajouter l'importation de typeORM dans "app.module.ts" 
+[
+    ConfigModule.forRoot({ isGlobal: true }),
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: process.env.POSTGRES_HOST,
+      port: parseInt(<string>process.env.POSTGRES_PORT),
+      username: process.env.POSTGRES_USER,
+      password: process.env.POSTGRES_PASSWORD,
+      database: process.env.POSTGRES_DATABASE,
+      autoLoadEntities: true,
+      synchronize: true, // shouldn't be used in production - may lose data
+    })
+]
+
+5- On cree un fichier .env de configuration.
+
+-----------------------------------------------------------------------------------------------------------------------
+Crud API and TypeOrm with Observables
+-----------------------------------------------------------------------------------------------------------------------
+
+1- On cree un nouveau module, un nouveau service, un nouveau controleur, et un codele(interface user, et une entite user)
+
+2- Dans user.module.ts on ajoute l'import de l'entite user.
+
+3- on implemente les methodes dans la couche service et la couch controlleur.
+
+
+-----------------------------------------------------------------------------------------------------------------------
+Password Hashing, JWT authentication, Login EndPoint
+-----------------------------------------------------------------------------------------------------------------------
+
+1- On cree un nouveau module auth, un nouveau service, un nouveau controleur.
+
+2- On ajoute un secret JWT dans le fichier ".env".
+
+3- [npm install @nestjs/jwt]
+
+4- On importe le module JWT dans auth.module.ts
+
+5-[npm i bcrypt --save]
+
+6- On implemente les methodes d'authentification dans authservice.
+
+7- On ajoute authService comme export
+
+8- On ajoute authModule dans userModule comme import
+
+9- On ajoute les nouvels attributs au service et a l'entite user.
+
+10- On modifie les methodes de userService, et on inject auth service dans le constructeur.
+
+11- On ajoute la fonction login , validateUser et findByEmail dans le service
+
+12- On ajoute la fonction login dans le controlleur
+
+
+-----------------------------------------------------------------------------------------------------------------------
+JWT- and Role based API Protection
+-----------------------------------------------------------------------------------------------------------------------
+++ Add prop role to a user.
+++ Custom @hasRoles('Admin') annotation , JwtGuard , RolesGuard .
+++ New Protected EndPoint for switching the role of a user.
+
+1- On cree un nouveau fichier "roles.decorator.ts" dans auth/decorators
+
+2- On cree un nouveau repertoir guards
+    2-1- a l'interieur on cree un fichier "jwt-guard.ts"
+    2-2- [npm i --save @nestjs/passport passport]
+    2-3- a l'interieur on cree un fichier "jwt-strategy.ts"
+    2-4- [npm install passport-jwt]
+    2-5- [npm install @types/passport-jwt]
+    2-6- on cree un fichier roles.guard.ts
+    2-7- On ajoute RolesGuard , JwtAuthGuard ,JwtStrategy    dans les providers du fichier "auth.module.ts" puis dans l'importe
+        on ajoute "forwardRef(() => UserModule),"
+    2-8- dans "user.module" => 
+        [
+            exports:[UserService]
+        ]
+    2-9- On ajoute ces decorateurs a la methode qui recupere tous les utilisateirs
+
+    {
+        @hasRoles('Admin')
+        @UseGuards(JwtAuthGuard , RolesGuard )
+    }
+    
+    /!\ Si on essaie de recuerer tous les utilisateurs on va nous retourner un message Unauthorized, c'est a dire qu'on
+    n'a pas l'autorisation d'acceder a cette essource.
+
+    /!\Or si on ajoute le token dans l'authorisation de la requette on aura acces aux utilisateurs.
+
+3- On modifie les interfaces user.entity et user.interface en ajoutant l'attribut role et dans user.interface on rajoute 
+    une enumeration qui comporte les roles ossibles dans notre application.
+
+4- On ajoute une methode updateRoleOfUser()
+
+
+-----------------------------------------------------------------------------------------------------------------------
+Pagination:
+-----------------------------------------------------------------------------------------------------------------------
+++ Create an end Poit for paginating users [getAllUsers()].
+++ Minor refactorings in code.
+
+1- [npm i nestjs-typeorm-paginate --save]
+2- on ajoute cette importation a user.service.ts [import {paginate, Pagination, IPaginationOptions} from 'nestjs-typeorm-paginate';]
+3- On cree une fonction paginate() dans user.service.ts.
+4- on cree une fonction index() dans user.controller.ts
+5- 
