@@ -119,9 +119,20 @@ Pagination:
 4- on cree une fonction index() dans user.controller.ts
 
 
- 
-
-
 
 /!\
 Dans le fichier "main.ts" de l'API du backend on definit le prefix global de l'application.
+
+
+
+-----------------------------------------------------------------------------------------------------------------------
+Real Time Search: (filtring and paginating with username).
+-----------------------------------------------------------------------------------------------------------------------
+
+1- Dans le controlleur "userController" on va modifier la methode index, du coup on va tester si la requete contient un 
+nom d'utilisateur "username" ou non.
+
+2- Dan le service "userService" On va ajouter une methode qui va nous permettre de retourner une pagination en fonction 
+du nom d'utilisateur.
+
+3- 

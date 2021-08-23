@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { from, Observable, throwError } from 'rxjs';
 import { AuthService } from 'src/auth/auth.service';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { UserEntity } from './models/user.entity';
 import { User } from './models/user.interface';
 import { switchMap, map, catchError} from 'rxjs/operators';
@@ -151,5 +151,41 @@ export class UserService {
     //modifier le ro;e d'un utilisateurs
     updateRoleOfUser(id: number, user: User): Observable<any> {
         return from(this.userRepository.update(id, user));
+    }
+
+
+    //pagination par nom d'utilisateur.
+    paginateFilterByUsername(options: IPaginationOptions, user: User): Observable<Pagination<User>>{
+        console.log(options);
+        const val = + options.page -1
+        return from(this.userRepository.findAndCount({
+            skip: val *  + options.limit || 0,
+            take: +options.limit || 10,
+            order: {id: "ASC"},
+            select: ['id', 'name', 'username', 'email', 'role'],
+            where: [
+                { username: Like(`%${user.username}%`)}
+            ]
+        })).pipe(
+            map(([users, totalUsers]) => {
+                const usersPageable: Pagination<User> = {
+                    items: users,
+                    links: {
+                        first: options.route + `?limit=${options.limit}`,
+                        previous: options.route + ``,
+                        next: options.route + `?limit=${options.limit}&page=${+ options.page +1}`,
+                        last: options.route + `?limit=${options.limit}&page=${Math.ceil(totalUsers / + options.limit)}`
+                    },
+                    meta: {
+                        currentPage: + options.page,
+                        itemCount: users.length,
+                        itemsPerPage: + options.limit,
+                        totalItems: totalUsers,
+                        totalPages: Math.ceil(totalUsers / + options.limit)
+                    }
+                };              
+                return usersPageable;
+            })
+        )
     }
 }
