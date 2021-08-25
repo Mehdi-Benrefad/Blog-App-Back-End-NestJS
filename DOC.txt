@@ -135,4 +135,10 @@ nom d'utilisateur "username" ou non.
 2- Dan le service "userService" On va ajouter une methode qui va nous permettre de retourner une pagination en fonction 
 du nom d'utilisateur.
 
-3- 
+-----------------------------------------------------------------------------------------------------------------------
+Upload image
+-----------------------------------------------------------------------------------------------------------------------
+1- On ajoute l'attribut profile image dans "userEntity" et "userInterface".
+2- [npm i @nestjs/platform-express --save]
+3- on declare une fonction(Post) dans le controlleur qui vq nous permetre d'enregistrer une image.
+4- On ajoute une methode de recuperation qui vq nous permettre de recuperer l'image.

@@ -17,7 +17,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"name\":\"diae\",\n\t\"username\":\"mbd7\",\n\t\"email\":\"benrefad2@gmail.com\",\n\t\"password\":\"12345678900\",\n    \"role\":\"user\"\n}"
+					"raw": "{\n\t\"name\":\"diae\",\n\t\"username\":\"mb3r7\",\n\t\"email\":\"benrefad465@gmail.com\",\n\t\"password\":\"1234567890000\",\n    \"role\":\"user\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:3000/api/users",
@@ -104,10 +104,20 @@
 		{
 			"name": "delete User",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoiTWVoZGkiLCJ1c2VybmFtZSI6Im1iNiIsImVtYWlsIjoiYmVucmVmYWRAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIn0sImlhdCI6MTYyOTQ3ODgwMCwiZXhwIjoxNjI5NDg4ODAwfQ.Y_IrjpVrn5tJMX6xSGPtsMBcNOe9a2hnGdi2-zuxNlE",
+							"type": "string"
+						}
+					]
+				},
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/api/users/1",
+					"raw": "http://localhost:3000/api/users/5",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -116,7 +126,7 @@
 					"path": [
 						"api",
 						"users",
-						"1"
+						"5"
 					]
 				}
 			},
@@ -209,6 +219,103 @@
 						"users",
 						"2",
 						"role"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "filtring by username",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/users?username=mb&page=2&limit=3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "mb"
+						},
+						{
+							"key": "page",
+							"value": "2"
+						},
+						{
+							"key": "limit",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Image",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoiTWVoZGkiLCJ1c2VybmFtZSI6Im1iNiIsImVtYWlsIjoiYmVucmVmYWRAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwicHJvZmlsZUltYWdlIjpudWxsfSwiaWF0IjoxNjI5OTM0MzEwLCJleHAiOjE2Mjk5NDQzMTB9.auR0h--L8oozIMiHzq67MpmeOjvEVB9_I50vcdFFM7c",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/Admin/OneDrive/Bureau/إن لم تكن صدرا بأول جملة أو فاعلا للمجد فى اسهاب.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users/upload",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"upload"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Image",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/users/profile-image/AI'3G'(ff9fbb39-1eca-43f0-b300-1fde81f2ef25.jpg",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"profile-image",
+						"AI'3G'(ff9fbb39-1eca-43f0-b300-1fde81f2ef25.jpg"
 					]
 				}
 			},

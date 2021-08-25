@@ -1,15 +1,34 @@
-import { Patch, Query, UseGuards } from '@nestjs/common';
+import { Patch, Query, UploadedFile, UseGuards, UseInterceptors , Request , Res} from '@nestjs/common';
+// Controller, Post, Body, Get, Param, Delete, Put, UseGuards, Query, UseInterceptors, UploadedFile, Request, Res 
 import { Body, Delete, Get, Param, Post } from '@nestjs/common';
 import { Put } from '@nestjs/common';
 import { Controller } from '@nestjs/common';
 import { Pagination } from 'nestjs-typeorm-paginate';
 import { Observable , of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { hasRoles } from 'src/auth/docorators/roles.decorator';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { User, UserRole } from './models/user.interface';
 import { UserService } from './user.service';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { v4 as uuidv4 } from 'uuid';
+import path = require('path');
+import { join } from 'path';
+
+//variable pour configurer le storage de la fonction d'upload
+export const storage = {
+    storage: diskStorage({
+        destination: './uploads/profileimages',
+        filename: (req, file, cb) => {
+            const filename: string = path.parse(file.originalname).name.replace(/\s/g, '') + uuidv4();
+            const extension: string = path.parse(file.originalname).ext;
+
+            cb(null, `${filename}${extension}`)
+        }
+    })
+}
 
 @Controller('users')
 export class UserController {
@@ -90,4 +109,28 @@ export class UserController {
     updateRoleOfUser(@Param('id') id: string, @Body() user: User): Observable<User> {
         return this.userService.updateRoleOfUser(Number(id), user);
     }
+
+
+    //fonction qui nous permet de recevoir le fichier (Image)
+    @UseGuards(JwtAuthGuard)
+    @Post('upload')
+    @UseInterceptors(FileInterceptor('file', storage))
+    uploadFile(@UploadedFile() file, @Request() req): Observable<Object> {
+        //on recupere l'utilisateur a partir de la requette.
+        const user: User = req.user.user;
+
+        return this.userService.updateOne(user.id, {profileImage: file.filename}).pipe(
+            tap((user: User) => console.log(user)),
+            map((user:User) => ({profileImage: user.profileImage}))
+        )
+        //return of({imagepath: file.path})
+    }
+
+
+    //recuperation de l'imagepath [@Res est un decorateur qui va nous permettre d'utiliser les fonctions de Express(response Onject de express)]
+    @Get('profile-image/:imagename')
+    findProfileImage(@Param('imagename') imagename, @Res() res): Observable<Object> {
+        return of(res.sendFile(join(process.cwd(), 'uploads/profileimages/' + imagename)));
+    }
+
 }

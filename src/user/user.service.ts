@@ -103,7 +103,9 @@ export class UserService {
         //on enleve le proprietes email et password de l'utilisateur.
         delete user.email;
         delete user.password;
-        return from(this.userRepository.update(id , user));
+        return from(this.userRepository.update(id , user)).pipe(
+            switchMap(() => this.findOne(id))
+        );
     }
 
 
@@ -159,7 +161,7 @@ export class UserService {
         console.log(options);
         const val = + options.page -1
         return from(this.userRepository.findAndCount({
-            skip: val *  + options.limit || 0,
+            skip: + options.page *  + options.limit || 0,
             take: +options.limit || 10,
             order: {id: "ASC"},
             select: ['id', 'name', 'username', 'email', 'role'],
