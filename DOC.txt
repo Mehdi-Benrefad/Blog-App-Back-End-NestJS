@@ -142,3 +142,9 @@ Upload image
 2- [npm i @nestjs/platform-express --save]
 3- on declare une fonction(Post) dans le controlleur qui vq nous permetre d'enregistrer une image.
 4- On ajoute une methode de recuperation qui vq nous permettre de recuperer l'image.
+
+-----------------------------------------------------------------------------------------------------------------------
+Verify User Is User (cad si l'utilisateur dont le token est active essaie de modifier un autre utilisateur il n;aura pas acces a la ressource)
+-----------------------------------------------------------------------------------------------------------------------
+1-On cree un nouveau fichier de configuration et de test "" dans le dossier guards.
+2- On ajoute " UserIsUserGuard " dans " @UseGuards "   :   [@UseGuards(JwtAuthGuard , UserIsUserGuard)]

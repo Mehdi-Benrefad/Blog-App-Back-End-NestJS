@@ -16,6 +16,7 @@ import { diskStorage } from 'multer';
 import { v4 as uuidv4 } from 'uuid';
 import path = require('path');
 import { join } from 'path';
+import { UserIsUserGuard } from 'src/auth/guards/UserIsUser.guard';
 
 //variable pour configurer le storage de la fonction d'upload
 export const storage = {
@@ -95,16 +96,17 @@ export class UserController {
         return this.userService.deleteOne(Number(id));
     }
 
-
+    @UseGuards(JwtAuthGuard , UserIsUserGuard)
     @Put(':id')
     updateOne(@Param('id')id:string, @Body() user: User): Observable<any>{
+        console.log('hello')
         return this.userService.updateOne(Number(id) , user);
     }
 
 
 
     @hasRoles(UserRole.ADMIN)
-    @UseGuards(JwtAuthGuard, RolesGuard)
+    @UseGuards(JwtAuthGuard)
     @Put(':id/role')
     updateRoleOfUser(@Param('id') id: string, @Body() user: User): Observable<User> {
         return this.userService.updateRoleOfUser(Number(id), user);
