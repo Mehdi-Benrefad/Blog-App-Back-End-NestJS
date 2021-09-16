@@ -1,4 +1,4 @@
-import { BlogEntry } from "src/blog/models/blog-entry.interface";
+//import { BlogEntry } from "src/blog/models/blog-entry.interface";
 
 export interface User {
     id?: number;
@@ -8,7 +8,7 @@ export interface User {
     password?: string;
     role?: UserRole;
     profileImage?: string;
-    blogEntries?: BlogEntry[];
+    //blogEntries?: BlogEntry[];
 }
 
 
